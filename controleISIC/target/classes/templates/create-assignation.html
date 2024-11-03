@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>VS Assign</title>
+    <!--Material icons-->
+    <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp"
+            rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css"/>
+    <!--Stylesheet-->
+</head>
+<body>
+<div class="container">
+    <aside>
+        <div class="top">
+            <div class="logo">
+                <img src="./logo.png"/>
+                <h2>VC <span class="ais">Assign</span></h2>
+            </div>
+            <div class="close" id="close-btn">
+                <span class="material-icons-sharp"> close </span>
+            </div>
+        </div>
+        <div class="sidebar">
+            <a href="#">
+                <span class="material-icons-sharp"> grid_view </span>
+                <h3>Dashboard</h3>
+            </a>
+            <a href="/">
+                <span class="material-icons-sharp"> home </span>
+                <h3>Accueil</h3>
+            </a>
+            <a href="/setAssignation"  class="active">
+                <span class="material-icons-sharp"> add_link </span>
+                <h3>créer assignation</h3>
+            </a>
+            <a href="/ajouterVehicule">
+                <span class="material-icons-sharp"> directions_car </span>
+                <h3>ajouter véhicule</h3>
+            </a>
+            <a href="/ajouterConducteur">
+                <span class="material-icons-sharp"> person </span>
+                <h3>ajouter conducteur</h3>
+            </a>
+            <a href="/toutLesConducteurs">
+                <span class="material-icons-sharp"> groups </span>
+                <h3>Liste des conducteurs</h3>
+            </a>
+            <a href="/toutLesVehicules">
+                <span class="material-icons-sharp"> local_shipping </span>
+                <h3>Liste des véhicules</h3>
+            </a>
+            <a href="/suppAssignation">
+                <span class="material-icons-sharp"> link_off </span>
+                <h3>Supprimer assignations</h3>
+            <a href="#">
+                <span class="material-icons-sharp"> logout </span>
+                <h3>Logout</h3>
+            </a>
+        </div>
+    </aside>
+    <!--END OF ASIDE-->
+    <main>
+        <h1>&nbsp Services</h1>
+        <div class="data">&nbsp &nbsp
+            <br>
+        </div>
+        <br>
+
+        <div class="login-signup-form animated fadeInDown">
+            <div class="form">
+                <h1 class="title">Associer Véhicule et Conducteur</h1>
+                <br>
+                <form th:action="@{/addAssignation}" th:method="post">
+
+                    <!-- Sélection du véhicule -->
+                    <div>
+                        <label for="vehicle">Choisir un véhicule : &nbsp &nbsp &nbsp &nbsp</label>
+                        <select id="vehicle" name="vehicleId" required>
+                            <option value="">-- Sélectionner un véhicule --</option>
+                            <option th:each="vehicle : ${vehicles}"
+                                    th:value="${vehicle.id}"
+                                    th:text="${vehicle.modele + '  |  ' + vehicle.immatricule}">
+                            </option>
+                        </select>
+                    </div>
+                    <br>
+                    <br>
+                    <!-- Sélection du conducteur -->
+                    <div>
+                        <label for="driver">Choisir un conducteur : &nbsp</label>
+                        <select id="driver" name="driverId" required>
+                            <option value="">-- Sélectionner un conducteur --</option>
+                            <option th:each="driver : ${drivers}"
+                                    th:value="${driver.id}"
+                                    th:text="${driver.nom + '  |  Permis: ' + driver.permis}">
+                            </option>
+                        </select>
+                    </div>
+                    <br>
+                    <br>
+
+                    <!-- Bouton de soumission -->
+                    <div>
+                        <button type="submit" class="btn-link">Associer</button>
+                    </div>
+            </div>
+            </form>
+
+        </div>
+
+    </main>
+    <!-------------MAIN------------------>
+    <div class="right">
+        <div class="top">
+            <button id="menu-btn">
+                <span class="material-icons-sharp"> menu </span>
+            </button>
+            <div class="profile">
+                <div class="info">
+                    <p><b>AIT MOH Youness</b></p>
+                    <small>ISIC 2</small>
+                </div>
+                <div class="profile-photo">
+                    <img src="./profile-1.jpg"/>
+                </div>
+            </div>
+        </div>
+
+
+        <!--------------------------------------->
+        <br>
+        <!--------------------------------------->
+
+        <div href="/ajouterConducteur" class="sales-analytics">
+            <h2>Derniers conducteurs créés</h2>
+
+            <div th:switch=${conducteurs}>
+                <h2 th:case="null">Pas de véhicules!</h2>
+                <div th:case="*">
+
+                    <div th:each="conducteur : ${conducteurs}" class="item offline">
+                        <div class="icon">
+                            <span class="material-icons-sharp"> person_add </span>
+                        </div>
+                        <div class="right">
+                            <div class="info">
+                                <h3 th:text="${conducteur.nom}"></h3>
+                                <small th:text="${conducteur.permis}" class="text-muted"></small>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div>
+                    <a href="/ajouterConducteur">
+                        <div class="item add-product">
+                            <div>
+
+                                <span class="material-icons-sharp">add</span>
+                                <h3>Ajouter un conducteur</h3>
+
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!--------------------------------------->
+        <br>
+        <div href="/ajouterVehicule" class="sales-analytics">
+            <h2>Derniers véhicules créés</h2>
+            <div th:switch=${vehicules}>
+                <h2 th:case="null">Pas de véhicules!</h2>
+                <div th:case="*">
+
+                    <div th:each="vehicule : ${vehicules}" class="item offline">
+                        <div class="icon">
+                            <span class="material-icons-sharp"> commute </span>
+                        </div>
+                        <div class="right">
+                            <div class="info">
+                                <h3 th:text="${vehicule.modele}"></h3>
+                                <small th:text="${vehicule.immatricule}" class="text-muted"></small>
+                            </div>
+                            <h3 th:text="${vehicule.etat}"></h3>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div>
+                    <a href="/ajouterVehicule">
+                        <div class="item add-product">
+                            <div>
+
+                                <span class="material-icons-sharp">add</span>
+                                <h3>Ajouter un véhicule</h3>
+
+                            </div>
+
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+
+        <script src="addscript.js"></script>
+        <script src="script.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+                integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+                crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                crossorigin="anonymous"></script>
+</body>
+</html>

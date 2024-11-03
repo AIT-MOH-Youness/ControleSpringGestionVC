@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>VS Assign</title>
+    <!--Material icons-->
+    <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp"
+            rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css"/>
+    <!--Stylesheet-->
+</head>
+<body>
+<div class="container">
+    <aside>
+        <div class="top">
+            <div class="logo">
+                <img src="./logo.png"/>
+                <h2>VC <span class="ais">Assign</span></h2>
+            </div>
+            <div class="close" id="close-btn">
+                <span class="material-icons-sharp"> close </span>
+            </div>
+        </div>
+        <div class="sidebar">
+            <a href="#">
+                <span class="material-icons-sharp"> grid_view </span>
+                <h3>Dashboard</h3>
+            </a>
+            <a href="/">
+                <span class="material-icons-sharp"> home </span>
+                <h3>Accueil</h3>
+            </a>
+            <a href="/setAssignation">
+                <span class="material-icons-sharp"> add_link </span>
+                <h3>créer assignation</h3>
+            </a>
+            <a href="/ajouterVehicule">
+                <span class="material-icons-sharp"> directions_car </span>
+                <h3>ajouter véhicule</h3>
+            </a>
+            <a href="/ajouterConducteur"  class="active">
+                <span class="material-icons-sharp"> person </span>
+                <h3>ajouter conducteur</h3>
+            </a>
+            <a href="/toutLesConducteurs">
+                <span class="material-icons-sharp"> groups </span>
+                <h3>Liste des conducteurs</h3>
+            </a>
+            <a href="/toutLesVehicules">
+                <span class="material-icons-sharp"> local_shipping </span>
+                <h3>Liste des véhicules</h3>
+            </a>
+            <a href="/suppAssignation">
+                <span class="material-icons-sharp"> link_off </span>
+                <h3>Supprimer assignations</h3>
+            <a href="#">
+                <span class="material-icons-sharp"> logout </span>
+                <h3>Logout</h3>
+            </a>
+        </div>
+    </aside>
+    <!--END OF ASIDE-->
+    <main>
+        <h1>&nbsp Services</h1>
+        <div class="data">&nbsp &nbsp
+            <br>
+        </div>
+        <br>
+
+
+        <div class="login-signup-form animated fadeInDown">
+            <div class="form">
+                        <h1 class="title">Ajouter un conducteur</h1>
+                        <form th:action="@{/addConducteur}" th:object="${conducteur}" method="post" class="form-card">
+                            <div class="row justify-content-between text-left">
+                                <div class="form-group col-sm-6 flex-column d-flex">
+                                    <label for="nom"
+                                        class="form-control-label px-3">Nom<span class="text-danger"> * &nbsp &nbsp </span></label>
+                                    <input type="text" th:field="*{nom}" id="nom" name="nom"
+                                           placeholder="Donnez votre nom" onblur="validate(1)">
+                                    <span th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}"></span>
+                                </div>
+                                <br>
+                                <div class="form-group col-sm-6 flex-column d-flex">
+                                    <label for="permis"
+                                        class="form-control-label px-3">Permis<span
+                                        class="text-danger"> *</span></label>
+                                    <input type="text" th:field="*{permis}" id="permis" name="permis"
+                                           placeholder="Donnez votre permis" onblur="validate(2)">
+                                    <span th:if="${#fields.hasErrors('permis')}" th:errors="*{permis}"></span>
+                                </div>
+                                <br>
+                            </div>
+
+                            <div class="row justify-content-end">
+                                <div>
+                                    <button type="submit" class="btn-link" value="Ajouter conducteur">Ajouter Conducteur</button>
+                                </div>
+                            </div>
+                        </form>
+            </div>
+        </div>
+
+
+    </main>
+    <!-------------MAIN------------------>
+    <div class="right">
+        <div class="top">
+            <button id="menu-btn">
+                <span class="material-icons-sharp"> menu </span>
+            </button>
+            <div class="profile">
+                <div class="info">
+                    <p><b>AIT MOH Youness</b></p>
+                    <small>ISIC 2</small>
+                </div>
+                <div class="profile-photo">
+                    <img src="./profile-1.jpg"/>
+                </div>
+            </div>
+        </div>
+
+
+        <!--------------------------------------->
+        <br>
+        <div href="/ajouterVehicule" class="sales-analytics">
+            <h2>Derniers véhicules créés</h2>
+            <div th:switch=${vehicules}>
+                <h2 th:case="null">Pas de véhicules!</h2>
+                <div th:case="*">
+
+                    <div th:each="vehicule : ${vehicules}" class="item offline">
+                        <div class="icon">
+                            <span class="material-icons-sharp"> commute </span>
+                        </div>
+                        <div class="right">
+                            <div class="info">
+                                <h3 th:text="${vehicule.modele}"></h3>
+                                <small th:text="${vehicule.immatricule}" class="text-muted"></small>
+                            </div>
+                            <h3 th:text="${vehicule.etat}"></h3>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div>
+                    <a href="/ajouterVehicule">
+                        <div class="item add-product">
+                            <div>
+
+                                <span class="material-icons-sharp">add</span>
+                                <h3>Ajouter un véhicule</h3>
+
+                            </div>
+
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+        <script src="addscript.js"></script>
+        <script src="script.js"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+                integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+                crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+                integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+                crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+                integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+                crossorigin="anonymous"></script>
+</body>
+</html>

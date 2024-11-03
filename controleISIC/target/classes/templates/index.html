@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>VS Assign</title>
+    <!--Material icons-->
+    <link
+            href="https://fonts.googleapis.com/icon?family=Material+Icons+Sharp"
+            rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css"/>
+    <!--Stylesheet-->
+</head>
+<body>
+<div class="container">
+    <aside>
+        <div class="top">
+            <div class="logo">
+                <img src="./logo.png"/>
+                <h2>VC <span class="ais">Assign</span></h2>
+            </div>
+            <div class="close" id="close-btn">
+                <span class="material-icons-sharp"> close </span>
+            </div>
+        </div>
+        <div class="sidebar">
+            <a href="#">
+                <span class="material-icons-sharp"> grid_view </span>
+                <h3>Dashboard</h3>
+            </a>
+            <a href="/" class="active">
+                <span class="material-icons-sharp"> home </span>
+                <h3>Accueil</h3>
+            </a>
+            <a href="/setAssignation">
+                <span class="material-icons-sharp"> add_link </span>
+                <h3>créer assignation</h3>
+            </a>
+            <a href="/ajouterVehicule">
+                <span class="material-icons-sharp"> directions_car </span>
+                <h3>ajouter véhicule</h3>
+            </a>
+            <a href="/ajouterConducteur">
+                <span class="material-icons-sharp"> person </span>
+                <h3>ajouter conducteur</h3>
+            </a>
+            <a href="/toutLesConducteurs">
+                <span class="material-icons-sharp"> groups </span>
+                <h3>Liste des conducteurs</h3>
+            </a>
+            <a href="/toutLesVehicules">
+                <span class="material-icons-sharp"> local_shipping </span>
+                <h3>Liste des véhicules</h3>
+            </a>
+            <a href="/suppAssignation">
+            <span class="material-icons-sharp"> link_off </span>
+            <h3>Supprimer assignations</h3>
+        </a>
+            <a href="#">
+                <span class="material-icons-sharp"> logout </span>
+                <h3>Logout</h3>
+            </a>
+        </div>
+    </aside>
+    <!--END OF ASIDE-->
+    <main>
+        <h1>&nbsp Services</h1>
+        <div class="data animated fadeInDown">&nbsp &nbsp
+            <br>
+        </div>
+        <br>
+
+        <div class="insights animated fadeInDown">
+            <div class="expenses">
+                <span class="material-icons-sharp"> attach_file </span>
+                <div class="middle">
+                    <div class="left">
+                        <h3>Assignation instantanée</h3>
+                        <a>création d'une assignation qui commance d'aujourd'hui</a>
+                    </div>
+                </div>
+                <br>
+
+                <a href="/setAssignation">
+                    <button class="btn-link"> Voir plus</button>
+                </a>
+
+            </div>
+            <!----------End Of Expenses------------>
+            <div class="sales animated fadeInDown">
+                <span class="material-icons-sharp"> link_off </span>
+                <div class="middle">
+                    <div class="left">
+                        <h3>Terminer une assignation</h3>
+                        <a>arréter une assignation deja existante </a>
+                        <br><br>
+                    </div>
+                </div>
+                <br>
+
+                <a href="/suppAssignation">
+                    <button class="btn-link"> Voir plus</button>
+                </a>
+
+            </div>
+            <!----------End Of Sales------------>
+            <div class="income animated fadeInDown">
+                <span class="material-icons-sharp"> share </span>
+                <div class="middle">
+                    <div class="left">
+                        <h3>Assignation personalisé</h3>
+                        <a>créer une assignation personalisé au niveau d'intervalle du temps</a>
+                    </div>
+                </div>
+                <br>
+
+                <a href="/setCustomAssignation">
+                    <button class="btn-link"> Voir plus</button>
+                </a>
+
+            </div>
+            <!----------End Of Income----------------->
+        </div>
+        <!------------End of Insights--------------->
+        <div class="Courses animated fadeInDown">
+            <h2>&nbsp Dernieres assignations</h2>
+            <br>
+            <table>
+                <thead>
+                <tr>
+                    <th>Le conducteur</th>
+                    <th>La véhicule</th>
+                    <th>Date de debut</th>
+                    <th>Date de fin</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr th:each="assignation : ${assignations}" class="text-center">
+                    <td th:text="${assignation.conducteur.nom}"></td>
+                    <td th:text="${assignation.vehicule.modele} + ' | ' + ${assignation.vehicule.immatricule}"></td>
+                    <td th:text="${assignation.pk.dateDebut}"></td>
+                    <td th:text="${assignation.dateFin}"></td>
+                </tr>
+
+                </tbody>
+            </table>
+            <a href="/toutAssignations">Voir plus</a>
+        </div>
+    </main>
+    <!-------------MAIN------------------>
+    <div class="right animated fadeInDown">
+        <div class="top">
+            <button id="menu-btn">
+                <span class="material-icons-sharp"> menu </span>
+            </button>
+            <div class="profile">
+                <div class="info">
+                    <p>Bonjour, <b>AIT MOH Youness</b></p>
+                    <small>ISIC 2</small>
+                </div>
+                <div class="profile-photo">
+                    <img src="./profile-1.jpg"/>
+                </div>
+            </div>
+        </div>
+
+        <!--------------------------------------->
+
+        <div href="/ajouterConducteur" class="sales-analytics">
+            <h2>Derniers conducteurs créés</h2>
+
+            <div th:switch=${conducteurs}>
+                <h2 th:case="null">Pas de véhicules!</h2>
+                <div th:case="*">
+
+                    <div th:each="conducteur : ${conducteurs}" class="item offline">
+                        <div class="icon">
+                            <span class="material-icons-sharp"> person_add </span>
+                        </div>
+                        <div class="right">
+                            <div class="info">
+                                <h3 th:text="${conducteur.nom}"></h3>
+                                <small th:text="${conducteur.permis}" class="text-muted"></small>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div>
+                    <a href="/ajouterConducteur">
+                        <div class="item add-product">
+                            <div>
+
+                                <span class="material-icons-sharp">add</span>
+                                <h3>Ajouter un conducteur</h3>
+
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!--------------------------------------->
+        <br>
+        <div href="/ajouterVehicule" class="sales-analytics">
+            <h2>Derniers véhicules créés</h2>
+            <div th:switch=${vehicules}>
+                <h2 th:case="null">Pas de véhicules!</h2>
+                <div th:case="*">
+
+                    <div th:each="vehicule : ${vehicules}" class="item offline">
+                        <div class="icon">
+                            <span class="material-icons-sharp"> commute </span>
+                        </div>
+                        <div class="right">
+                            <div class="info">
+                                <h3 th:text="${vehicule.modele}"></h3>
+                                <small th:text="${vehicule.immatricule}" class="text-muted"></small>
+                            </div>
+                            <h3 th:text="${vehicule.etat}"></h3>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div>
+                    <a href="/ajouterVehicule">
+                        <div class="item add-product">
+                            <div>
+
+                                <span class="material-icons-sharp">add</span>
+                                <h3>Ajouter un véhicule</h3>
+
+                            </div>
+
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+        <script src="addscript.js"></script>
+        <script src="script.js"></script>
+</body>
+</html>
