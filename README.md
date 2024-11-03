@@ -107,5 +107,10 @@ L'application web sera accessible à l'adresse http://localhost:8080.
 - [MySQL](https://www.mysql.com/)
 - [Maven](https://maven.apache.org/)
 
+##  Démonstration
+Une petite démonstration dui projet
+
+
+
 ##  Contribuer
 Les contributions au projet sont les bienvenues! N'hésitez pas à créer un pull request.
