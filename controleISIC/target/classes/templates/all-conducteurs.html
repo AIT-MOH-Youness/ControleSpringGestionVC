@@ -82,6 +82,7 @@
                         <th>Permis</th>
                         <th></th>
                         <th></th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -90,6 +91,7 @@
                         <td th:text="${conducteur.permis}">Permis du Conducteur</td>
                         <td><a th:href="@{/editConducteur/{id}(id=${conducteur.id})}">Modifier</a></td>
                         <td><a th:href="@{/deleteConducteur/{id}(id=${conducteur.id})}">Supprimer</a></td>
+                        <td><a th:href="@{/vehiculesDeConducteur/{id}(id=${conducteur.id})}">Vehicules Assigné</a></td>
                     </tr>
                     <br>
                     </tbody>

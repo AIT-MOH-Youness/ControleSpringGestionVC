@@ -47,7 +47,7 @@
                 <h3>modifier conducteur</h3>
             </a>
             <a href="/toutLesConducteurs">
-                <span class="material-icons-sharp"> meet </span>
+                <span class="material-icons-sharp"> groups </span>
                 <h3>Liste des conducteurs</h3>
             </a>
             <a href="/toutLesVehicules">
@@ -74,15 +74,15 @@
 
         <div class="login-signup-form animated fadeInDown">
             <div class="form">
-                <h1 class="title">Ajouter un véhicule</h1>
+                <h1 class="title">Modifier un véhicule</h1>
                 <form th:action="@{/updateConducteur/{id}(id=${conducteur.id})}" th:object="${conducteur}" method="post" class="form-card">
                     <br>
                     <div class="row justify-content-between text-left">
                         <div class="form-group col-sm-6 flex-column d-flex">
                             <label for="nom"
-                                   class="form-control-label px-3">Modele<span class="text-danger"> * &nbsp &nbsp &nbsp &nbsp</span></label>
+                                   class="form-control-label px-3">Nom<span class="text-danger"> * &nbsp &nbsp </span></label>
                             <input type="text" th:field="*{nom}" id="nom" name="nom"
-                                   placeholder="Donnez votre modele de véhicule" onblur="validate(1)">
+                                   placeholder="Donnez votre nom" onblur="validate(1)">
                             <span th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}"></span>
                         </div>
                         <br>
@@ -91,15 +91,15 @@
                                    class="form-control-label px-3">Permis<span
                                     class="text-danger"> *</span></label>
                             <input type="text" th:field="*{permis}" id="permis" name="permis"
-                                   placeholder="Donnez votre plaque d'immatriculation" onblur="validate(2)">
+                                   placeholder="Donnez votre permis" onblur="validate(2)">
                             <span th:if="${#fields.hasErrors('permis')}" th:errors="*{permis}"></span>
                         </div>
                         <br>
                     </div>
 
-                    <div class="row justify-content-end">
+                    <div class="Courses">
                         <div>
-                            <button type="submit" class="btn-link" value="Ajouter véhicule">Modifier Conducteur</button>
+                            <button type="submit" class="btn btn-block" value="Ajouter véhicule">Modifier Conducteur</button>
                         </div>
                     </div>
                 </form>

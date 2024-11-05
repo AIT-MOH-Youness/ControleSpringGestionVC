@@ -1,5 +1,7 @@
 package com.isic.controllers;
 
+import com.isic.entities.Assignation;
+import com.isic.entities.AssignationPK;
 import com.isic.entities.Conducteur;
 import com.isic.repositories.ConducteurRepository;
 import com.isic.repositories.VehiculeRepository;
@@ -60,7 +62,7 @@ public class ConducteurController {
         model.addAttribute("conducteurs", cService.getLastConducteurs(2));
         model.addAttribute("vehicules", vService.getLastVehicules(2));
         model.addAttribute("assignations", aService.getLastAssignations(3));
-        return "index";
+        return "redirect:/toutLesConducteurs";
     }
 
     @GetMapping("/editConducteur/{id}")
@@ -68,9 +70,10 @@ public class ConducteurController {
         Conducteur conducteur = cService.getConducteurById(id);
         model.addAttribute("conducteur", conducteur);
         model.addAttribute("conducteurs", cService.getLastConducteurs(2));
+        model.addAttribute("vehicles", conducteur.getVehiculeAssigne());
         model.addAttribute("vehicules", vService.getLastVehicules(2));
         model.addAttribute("assignations", aService.getLastAssignations(3));
-        return"update-conducteur";
+        return "update-conducteur";
     }
     
     
@@ -78,15 +81,27 @@ public class ConducteurController {
     public String updateConducteur(@PathVariable("id") long id, @Validated Conducteur conducteur, BindingResult result, Model model) {
         if (result.hasErrors()) {
             conducteur.setId(id);
-            return"update-conducteur";
+            return "update-conducteur";
         }
-
         cService.saveConducteur(conducteur);
         model.addAttribute("conducteurs", cService.getAllConducteurs());
         model.addAttribute("conducteurs", cService.getLastConducteurs(2));
         model.addAttribute("vehicules", vService.getLastVehicules(2));
         model.addAttribute("assignations", aService.getLastAssignations(3));
         return "redirect:/toutLesConducteurs";
+    }
+
+    @GetMapping("/vehiculesDeConducteur/{id}")
+    public String vehiculesDeConducteur(@PathVariable("id") long id,
+                                        Assignation assignation, Model model) {
+
+        Conducteur conducteur = cService.getConducteurById(id);
+        model.addAttribute("vehicles", cService.getConducteurById(id).getVehiculeAssigne());
+        model.addAttribute("driver", conducteur);
+        model.addAttribute("conducteurs", cService.getLastConducteurs(2));
+        model.addAttribute("vehicules", vService.getLastVehicules(2));
+        model.addAttribute("assignations", aService.getAllAssignations());
+        return "vehicules-deconducteur";
     }
     
     

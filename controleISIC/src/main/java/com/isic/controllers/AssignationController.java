@@ -2,29 +2,21 @@ package com.isic.controllers;
 
 import com.isic.entities.Assignation;
 import com.isic.entities.Conducteur;
-import com.isic.entities.ConducteurVehiculePK;
+import com.isic.entities.AssignationPK;
 import com.isic.entities.Vehicule;
-import com.isic.repositories.AssignationRepository;
-import com.isic.repositories.ConducteurRepository;
-import com.isic.repositories.VehiculeRepository;
 import com.isic.services.AssignationService;
 import com.isic.services.ConducteurService;
 import com.isic.services.VehiculeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
-import java.util.List;
 
 @Controller
 public class AssignationController {
@@ -49,6 +41,7 @@ public class AssignationController {
     }
 
 
+
     @GetMapping("/setAssignation")
     public String showAssignationParam(Assignation assignation, Model model) {
         model.addAttribute("vehicles", vService.getNonAssignedVehicules());
@@ -61,7 +54,7 @@ public class AssignationController {
 
     @GetMapping("/setCustomAssignation")
     public String customAssignationParam(Assignation assignation, Model model) {
-        model.addAttribute("vehicles", vService.getNonAssignedVehicules());
+        model.addAttribute("vehicles", vService.getAllVehicules());
         model.addAttribute("drivers", cService.getAllConducteurs());
         model.addAttribute("conducteurs", cService.getLastConducteurs(2));
         model.addAttribute("vehicules", vService.getLastVehicules(2));
@@ -69,11 +62,12 @@ public class AssignationController {
         return "create-custom-assignation";
     }
 
+
     @PostMapping("/addAssignation")
     public String addAssignation(@RequestParam("vehicleId") Long vehicleId,
                                  @RequestParam("driverId") Long driverId, Model model) {
 
-        ConducteurVehiculePK pk = new ConducteurVehiculePK() ;
+        AssignationPK pk = new AssignationPK() ;
         pk.setDateDebut(new Date());
         pk.setVehicule(vehicleId);
         pk.setConducteur(driverId);
@@ -87,7 +81,7 @@ public class AssignationController {
         model.addAttribute("conducteurs", cService.getLastConducteurs(2));
         model.addAttribute("vehicules", vService.getLastVehicules(2));
         model.addAttribute("assignations", aService.getLastAssignations(3));
-        return "index";
+        return "redirect:/";
     }
 
     @PostMapping("/addCustomAssignation")
@@ -97,7 +91,7 @@ public class AssignationController {
                                        @RequestParam("dateFin") String dF,
                                        Model model) {
 
-        ConducteurVehiculePK pk = new ConducteurVehiculePK();
+        AssignationPK pk = new AssignationPK();
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date dateDebut = null;
         try {
@@ -117,13 +111,15 @@ public class AssignationController {
         Vehicule vehicule = vService.getVehiculeById(vehicleId);
         Conducteur conducteur = cService.getConducteurById(driverId);
         conducteur.addVehiculeAssigne(vehicule);
-        vehicule.setEtat("assigné dernierement (custom)");
+        if(!vehicule.getEtat().equals("assigné")){
+            vehicule.setEtat("assigné dernierement (custom)");
+        }
         Assignation assignation = new Assignation(pk,vehicule,conducteur,dateFin);
         aService.saveAssignation(assignation);
         model.addAttribute("conducteurs", cService.getLastConducteurs(2));
         model.addAttribute("vehicules", vService.getLastVehicules(2));
         model.addAttribute("assignations", aService.getLastAssignations(3));
-        return "index";
+        return "redirect:/";
     }
 
     @GetMapping("/suppAssignation")
@@ -140,14 +136,14 @@ public class AssignationController {
                                  @RequestParam("cdId") Long cdId, Model model) {
 
         Assignation a = aService.getAssignationByVehiculeId(vehiId);
-        a.setDateFin(new Date());
         a.getConducteur().getVehiculeAssigne().remove(a.getConducteur().getVehiculeAssigneById(vehiId));
+        a.setDateFin(new Date());
         a.getVehicule().setEtat("non assigné");
         aService.saveAssignation(a);
         model.addAttribute("conducteurs", cService.getLastConducteurs(2));
         model.addAttribute("vehicules", vService.getLastVehicules(2));
-        model.addAttribute("assignations", aService.getLastAssignations(3));
-        return "index";
+        model.addAttribute("assignations", aService.getAssignationsNotEnded());
+        return "redirect:/suppAssignation";
     }
 
 

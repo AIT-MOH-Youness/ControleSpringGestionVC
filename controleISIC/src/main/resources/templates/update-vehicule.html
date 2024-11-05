@@ -74,7 +74,7 @@
 
         <div class="login-signup-form animated fadeInDown">
             <div class="form">
-                <h1 class="title">Ajouter un véhicule</h1>
+                <h1 class="title">Modifier un véhicule</h1>
                 <form th:action="@{/updateVehicule/{id}(id=${vehicule.id})}" th:object="${vehicule}" method="post" class="form-card">
                     <br>
                     <div class="row justify-content-between text-left">
@@ -97,9 +97,9 @@
                         <br>
                     </div>
 
-                    <div class="row justify-content-end">
+                    <div class="Courses">
                         <div>
-                            <button type="submit" class="btn-link" value="Ajouter véhicule">Modifier Véhicule</button>
+                            <button type="submit" class="btn btn-block" value="Ajouter véhicule">Modifier Véhicule</button>
                         </div>
                     </div>
                 </form>

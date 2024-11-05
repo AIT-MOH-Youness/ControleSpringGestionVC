@@ -60,6 +60,22 @@ public class VehiculeService {
         return as;
     }
 
+    public long getConducteurId() {
+        Vehicule vehicule = new Vehicule();
+        Long l = vehicule.getConducteur().getId();
+        return l;
+    }
+
+    public List<Vehicule> findByConducteurId(long l) {
+        List<Vehicule> vehicules = new ArrayList<>();
+        for(Vehicule v : vehiculeRepository.findAll()){
+            if(v.getConducteur().getId()==l){
+                vehicules.add(v);
+            }
+        }
+        return vehicules;
+    }
+
     public void deleteVehicule(Vehicule vehicule) {
         vehiculeRepository.delete(vehicule);
     }

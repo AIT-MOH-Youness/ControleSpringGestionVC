@@ -9,7 +9,7 @@ import java.util.Date;
 public class Assignation {
 
     @EmbeddedId
-    private ConducteurVehiculePK pk;
+    private AssignationPK pk;
 
     @ManyToOne
     @JoinColumn(name = "vehicule",insertable=false, updatable=false)
@@ -21,22 +21,28 @@ public class Assignation {
 
     private Date dateFin;
 
-
     public Assignation() {
     }
 
-    public Assignation(ConducteurVehiculePK pk, Vehicule vehicule, Conducteur conducteur, Date dateFin) {
+    public Assignation(AssignationPK pk, Vehicule vehicule, Conducteur conducteur, Date dateFin) {
         this.pk = pk;
         this.vehicule = vehicule;
         this.conducteur = conducteur;
         this.dateFin = dateFin;
     }
 
-    public ConducteurVehiculePK getPk() {
+    public Assignation(AssignationPK pk, Date dateFin) {
+        this.pk = pk;
+        this.vehicule = vehicule;
+        this.conducteur = conducteur;
+        this.dateFin = dateFin;
+    }
+
+    public AssignationPK getPk() {
         return pk;
     }
 
-    public void setPk(ConducteurVehiculePK pk) {
+    public void setPk(AssignationPK pk) {
         this.pk = pk;
     }
 

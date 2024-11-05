@@ -80,6 +80,8 @@
                     <!-- Sélection du véhicule -->
                     <div>
                         <label for="vehicle">Choisir un véhicule : &nbsp &nbsp &nbsp &nbsp</label>
+                        <br>
+                        <br>
                         <select id="vehicle" name="vehicleId" required>
                             <option value="">-- Sélectionner un véhicule --</option>
                             <option th:each="vehicle : ${vehicles}"
@@ -93,6 +95,8 @@
                     <!-- Sélection du conducteur -->
                     <div>
                         <label for="driver">Choisir un conducteur : &nbsp</label>
+                        <br>
+                        <br>
                         <select id="driver" name="driverId" required>
                             <option value="">-- Sélectionner un conducteur --</option>
                             <option th:each="driver : ${drivers}"
@@ -110,7 +114,6 @@
 
                     <br>
 
-
                     <div class="data">
                         <label for="driver">Choisir date de fin : &nbsp &nbsp &nbsp</label>
                         <input type="date"  name="dateFin" required/>
@@ -120,8 +123,8 @@
                     <br>
 
                     <!-- Bouton de soumission -->
-                    <div>
-                        <button type="submit" class="btn-link">Associer</button>
+                    <div class="Courses">
+                        <button type="submit" class="btn btn-block">Associer</button>
                     </div>
             </div>
             </form>

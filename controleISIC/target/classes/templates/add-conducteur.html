@@ -73,11 +73,11 @@
 
 
         <div class="login-signup-form animated fadeInDown">
-            <div class="form">
+            <div  class="form">
                         <h1 class="title">Ajouter un conducteur</h1>
                         <form th:action="@{/addConducteur}" th:object="${conducteur}" method="post" class="form-card">
                             <div class="row justify-content-between text-left">
-                                <div class="form-group col-sm-6 flex-column d-flex">
+                                <div>
                                     <label for="nom"
                                         class="form-control-label px-3">Nom<span class="text-danger"> * &nbsp &nbsp </span></label>
                                     <input type="text" th:field="*{nom}" id="nom" name="nom"
@@ -85,7 +85,7 @@
                                     <span th:if="${#fields.hasErrors('nom')}" th:errors="*{nom}"></span>
                                 </div>
                                 <br>
-                                <div class="form-group col-sm-6 flex-column d-flex">
+                                <div>
                                     <label for="permis"
                                         class="form-control-label px-3">Permis<span
                                         class="text-danger"> *</span></label>
@@ -96,9 +96,9 @@
                                 <br>
                             </div>
 
-                            <div class="row justify-content-end">
+                            <div class="Courses">
                                 <div>
-                                    <button type="submit" class="btn-link" value="Ajouter conducteur">Ajouter Conducteur</button>
+                                    <button type="submit" class="btn btn-block" value="Ajouter conducteur">Ajouter Conducteur</button>
                                 </div>
                             </div>
                         </form>

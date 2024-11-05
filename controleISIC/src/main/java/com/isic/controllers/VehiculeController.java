@@ -1,5 +1,7 @@
 package com.isic.controllers;
 
+import com.isic.entities.Assignation;
+import com.isic.entities.AssignationPK;
 import com.isic.entities.Conducteur;
 import com.isic.entities.Vehicule;
 import com.isic.repositories.VehiculeRepository;
@@ -54,7 +56,7 @@ public class VehiculeController {
         model.addAttribute("conducteurs", cService.getLastConducteurs(2));
         model.addAttribute("vehicules", vService.getLastVehicules(2));
         model.addAttribute("assignations", aService.getLastAssignations(3));
-        return "index";
+        return "redirect:/toutLesVehicules";
     }
 
 
@@ -65,7 +67,7 @@ public class VehiculeController {
         model.addAttribute("conducteurs", cService.getLastConducteurs(2));
         model.addAttribute("vehicules", vService.getLastVehicules(2));
         model.addAttribute("assignations", aService.getLastAssignations(3));
-        return"update-vehicule";
+        return "update-vehicule";
     }
 
 
@@ -73,7 +75,7 @@ public class VehiculeController {
     public String updateVehicule(@PathVariable("id") long id, @Validated Vehicule vehicule, BindingResult result, Model model) {
         if (result.hasErrors()) {
             vehicule.setId(id);
-            return"update-vehicule";
+            return "update-vehicule";
         }
         vehicule.setEtat(vService.getVehiculeById(id).getEtat());
         vService.saveVehicule(vehicule);
